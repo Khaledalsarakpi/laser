@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,12 +20,12 @@ class NotificationController extends GetxController {
   FlutterLocalNotificationsPlugin fln = new FlutterLocalNotificationsPlugin();
   AndroidNotificationChannel channel = AndroidNotificationChannel(
     '0', // id
-    'وزارة التنمية والشؤون الإنسانية', // title
-    'استقبال الاشعارات من وزارة التنمية.', // description
+    'Prinseska ', // title
+    'Prinseska', // description
     importance: Importance.high,
   );
   RxInt notificationcount = 0.obs;
-  var isblocked = false.obs;
+
   @override
   void onInit() async {
     super.onInit();
@@ -56,14 +57,14 @@ class NotificationController extends GetxController {
   }
 
   void recivNotificationtoUser(Notifications notification) {
-    var androidi = new AndroidInitializationSettings('@mipmap/logo');
-    var iosi = new IOSInitializationSettings();
+    var androidi = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iosi = IOSInitializationSettings();
     var initsetting = new InitializationSettings(android: androidi, iOS: iosi);
     fln.initialize(initsetting, onSelectNotification: (txt) {
       return Future.value(true);
     });
-    var android = AndroidNotificationDetails(notification.chanelid!,
-        notification.chanelname!, notification.chanelDescription!,
+    var android = AndroidNotificationDetails("0",
+        "IPL", "IPL ",
         priority: Priority.high,
         importance: Importance.max,
         visibility: NotificationVisibility.public,
@@ -91,7 +92,9 @@ class NotificationController extends GetxController {
   }
 
   Function(String? s)? onselect;
+
   Stream<QuerySnapshot> getAllNotification() {
+    log(auth.auth.currentUser!.uid);
     return FirebaseFirestore.instance
         .collection('/Notification')
         .doc(auth.auth.currentUser?.uid)
@@ -102,13 +105,14 @@ class NotificationController extends GetxController {
 
   void storeNotification(RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
+    recivNotificationtoUser(Notifications(title: notification!.title,body: notification.body));
     await FirebaseFirestore.instance
         .collection('/Notification')
         .doc(auth.auth.currentUser?.uid)
         .collection('/notification')
         .add({
-      'content': notification?.body,
-      'from': notification?.title,
+      'content': notification.body,
+      'from': notification.title,
       'time': DateTime.now(),
       'isread': false
     });
@@ -155,4 +159,12 @@ class NotificationController extends GetxController {
   void onmessageOpenApp() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
   }
+
+  Future<void> scheduleNotifications() async {
+    //await fln.schedule(id, title, body, scheduledDate, notificationDetails)
+  }
+
+
+
+
 }

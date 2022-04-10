@@ -8,23 +8,18 @@ import 'NewMessage.dart';
 
 class Chatscreen extends StatelessWidget {
   final auth = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("قسم الدردشة"),
-        backgroundColor: Colors.blue,
+        title: Text('قسم الدردشة'.tr),
+        backgroundColor: Color.fromRGBO(250, 193, 192, 1.0),
         centerTitle: true,
-        bottom: AppBar(
-          title: Text('إرسال سؤال'),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.transparent,
-        ),
       ),
       body: Padding(
-        padding:  EdgeInsets.only(bottom: 100),
+        padding: EdgeInsets.only(bottom: 100),
         child: Message(),
       ),
       floatingActionButton: NewMessage(),

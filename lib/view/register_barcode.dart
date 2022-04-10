@@ -1,9 +1,13 @@
 import 'dart:developer';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:laser/constant/constant.dart';
 import 'package:laser/view/product_view.dart';
+import 'package:laser/view/welcom_view.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class RegisterBarcode extends StatefulWidget {
@@ -22,10 +26,12 @@ class _QRViewState extends State<RegisterBarcode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromRGBO(234, 204, 203, 1.0),
         appBar: AppBar(
-          title: Text('تسجيل الدخول'),
-          automaticallyImplyLeading: false,
           centerTitle: true,
+          backgroundColor: Color.fromRGBO(232, 133, 133, 1),
+          title: Text('حسابي'.tr),
+          automaticallyImplyLeading: false,
         ),
         body: Stack(
           alignment: Alignment.center,
@@ -35,7 +41,7 @@ class _QRViewState extends State<RegisterBarcode> {
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
               overlay: QrScannerOverlayShape(
-                  borderColor: Colors.red,
+                  borderColor: Color.fromRGBO(215, 115, 114, 1.0),
                   borderRadius: 10,
                   borderLength: 30,
                   borderWidth: 10,
@@ -48,25 +54,10 @@ class _QRViewState extends State<RegisterBarcode> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    !puse_camera!
-                        ? Text(
-                            'ضع الباركود في منتصف الكاميرا',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        : ElevatedButton(
-                            onPressed: () {
-                              controller?.resumeCamera().then((value) {
-                                setState(() {
-                                  puse_camera = false;
-                                });
-                              });
-                            },
-                            child: Text('إعادة الالتقاط')),
-                    ElevatedButton(
-                        onPressed: () {
-                          Get.to(Products());
-                        },
-                        child: Text('التالي'))
+                    Text(
+                      'ضع الباركودالموجود على العلبة  في منتصف الكاميرا'.tr,
+                      style: TextStyle(color: Colors.white),
+                    )
                   ],
                 )),
             Align(
@@ -107,10 +98,21 @@ class _QRViewState extends State<RegisterBarcode> {
     });
     controller.scannedDataStream.listen((scanData) {
       setState(() {
-        result = scanData;
-        puse_camera = true;
+        var resultt = scanData.code;
+        if (resultt == '1cf68a75-3091-5edc-8e13-f80d1400b028') {
+          controller.pauseCamera();
+          Fluttertoast.cancel();
+          showtoast(text: 'تم تسجيل الدخول بنجاح'.tr, bgcolor: Colors.green);
+          var storage = GetStorage();
+          storage.write('barcode', '1');
+          Get.offAll(WelcomeView());
+        } else {
+          Fluttertoast.cancel();
+          showtoast(
+              text: 'الباركود خاطئ اقرأ الباركود الموجود على العلبة',
+              bgcolor: Colors.red);
+        }
       });
-      controller.pauseCamera();
     });
   }
 

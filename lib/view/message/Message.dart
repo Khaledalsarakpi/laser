@@ -15,7 +15,10 @@ class Message extends StatelessWidget {
       stream: com.getmessage(),
       builder: (ctx, snapShot) {
         if (snapShot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            color: Color.fromRGBO(232, 133, 133, 1),
+          ));
         }
         if (snapShot.hasData) {
           log(snapShot.data!.docs.length.toString());

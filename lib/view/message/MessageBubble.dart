@@ -22,7 +22,8 @@ class MessageBubble extends StatelessWidget {
         margin: BubbleEdges.only(top: 10),
         alignment: isme! ? Alignment.topRight : Alignment.topLeft,
         nip: isme! ? BubbleNip.rightBottom : BubbleNip.leftBottom,
-        color: isme!? Color.fromRGBO(225, 255, 199, 1.0):Color.fromRGBO(205, 250, 200, 1.0),
+        color: isme!? Color.fromRGBO(252, 216, 221, 1.0):Color.fromRGBO(
+            248, 184, 193, 1.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -36,7 +37,7 @@ class MessageBubble extends StatelessWidget {
             Text(
               retdate(date!),
               textDirection: TextDirection.rtl,
-              style: TextStyle(color: Colors.blue, fontSize: 8),
+              style: TextStyle(color: Color.fromRGBO(215, 115, 114, 1.0), fontSize: 8),
             )
           ],
         ),

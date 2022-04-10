@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:laser/view/home.dart';
 import 'package:laser/view/welcom_view.dart';
 import 'package:get/get.dart';
 import '../constant/constant.dart';
@@ -9,31 +11,41 @@ class Products extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(234, 204, 203, 1.0),
       appBar: AppBar(
-        title: Text('المنتجات'),
         centerTitle: true,
+        backgroundColor: Color.fromRGBO(232, 133, 133, 1),
+        title: Text('المنتجات'.tr),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Card(
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text('Prinseska IPL'),
-                visualDensity: VisualDensity(vertical: 0, horizontal: 0),
-                dense: false,
-                leading: Image.asset(
-                  laser,
-                  fit: BoxFit.fill,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
+            SizedBox(
+              height: 70.h,
+              child: Card(
+                child: ListTile(
+                  onTap: () {
+                    Get.to(Home());
+                  },
+                  contentPadding: EdgeInsets.zero,
+                  title: Center(
+                      child: Text(
+                    'Prinseska IPL',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  dense: false,
+                  trailing: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.asset(
+                      laser,
+                      fit: BoxFit.fill,
+                      alignment: Alignment.center,
+                      filterQuality: FilterQuality.high,
+                    ),
+                  ),
                 ),
-                trailing: IconButton(
-                    onPressed: () {
-                      Get.to(WelcomeView());
-                    }, icon: Icon(Icons.navigate_next_outlined)),
               ),
             )
           ],

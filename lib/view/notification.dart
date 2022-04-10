@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +14,12 @@ class Notificationsview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(234, 204, 203, 1.0),
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Color.fromRGBO(232, 133, 133, 1),
+          title: Text('الاشعارات'.tr),
+        ),
         body: StreamBuilder<QuerySnapshot>(
             stream: notifi.getAllNotification(),
             builder: (context, snapshot) {
@@ -28,7 +35,7 @@ class Notificationsview extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.all(1.w),
                         child: Card(
-                          color: Colors.black87,
+                          color: Colors.white,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
@@ -43,7 +50,7 @@ class Notificationsview extends StatelessWidget {
                                     title: Text(
                                       snapshot.data?.docs[index]['from'],
                                       style: TextStyle(
-                                          color: Colors.blue,
+                                          color: Colors.black,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -58,13 +65,13 @@ class Notificationsview extends StatelessWidget {
                                                 ['isread'] ==
                                             false
                                         ? Icon(
-                                            Icons
-                                                .notifications_active_rounded,
+                                            Icons.notifications_active_rounded,
                                             color: Colors.red,
                                           )
                                         : Icon(
                                             Icons.notifications,
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO(
+                                                250, 193, 192, 1.0),
                                           ),
                                     collapsedBackgroundColor: Colors.black12,
                                     children: [
@@ -72,20 +79,18 @@ class Notificationsview extends StatelessWidget {
                                         snapshot.data?.docs[index]['content'],
                                         overflow: TextOverflow.fade,
                                         style: TextStyle(
-                                            color: Colors.blue,
+                                            color: Colors.black,
                                             fontSize: 16.sp),
                                       )
                                     ],
                                     onExpansionChanged: (bool val) async {
-                                      print(snapshot.data?.docs[index].id);
-                                      if (snapshot.data?.docs[index]
-                                              ['isread'] ==
-                                          false)
-                                        notifi
-                                            .readNotification(
-                                                snapshot.data!.docs[index].id)
-                                            .onError((error, stackTrace) =>
-                                                {print(error)});
+                                      log(snapshot.data!.docs[index].id
+                                          .toString());
+                                      notifi
+                                          .readNotification(
+                                              snapshot.data!.docs[index].id)
+                                          .onError((error, stackTrace) =>
+                                              {print(error)});
                                     },
                                   ),
                                 ),
@@ -98,7 +103,9 @@ class Notificationsview extends StatelessWidget {
                   },
                 );
               } else {
-                return Container(child: Text('فارغ'),);
+                return Container(
+                  child: Text('فارغ'),
+                );
               }
             }));
   }
