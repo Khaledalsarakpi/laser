@@ -23,7 +23,10 @@ class QuestionView extends StatelessWidget {
         stream: com.get_question(),
         builder: (ctx, snapShot) {
           if (snapShot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(
+              color: Color.fromRGBO(232, 133, 133, 1),
+            ));
           }
           if (snapShot.hasData) {
             log(snapShot.data!.docs.length.toString());
@@ -33,8 +36,7 @@ class QuestionView extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 return Card(
                   child: ExpansionTile(
-
-                    iconColor:Color.fromRGBO(232, 133, 133, 1) ,
+                    iconColor: Color.fromRGBO(232, 133, 133, 1),
                     title: Text(
                       snapShot.data?.docs[index]['question'],
                       style: TextStyle(

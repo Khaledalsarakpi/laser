@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,10 +6,17 @@ import 'package:get_storage/get_storage.dart';
 //import 'package:workmanager/workmanager.dart';
 import 'package:get/get.dart';
 import 'package:laser/view/home.dart';
+import 'package:workmanager/workmanager.dart';
 import '../constant/constant.dart';
 import '../controller/notification.dart';
 import '../model/notification.dart';
 import 'howtouse.dart';
+
+class Reaction {
+  Widget? widget;
+  int? id;
+  Reaction({this.id, this.widget});
+}
 
 class TableSession extends StatefulWidget {
   const TableSession({Key? key}) : super(key: key);
@@ -21,6 +26,39 @@ class TableSession extends StatefulWidget {
 }
 
 class _TableSessionState extends State<TableSession> {
+  var inre = -1;
+  var lstreaction = [
+    Reaction(
+        id: 0,
+        widget: Icon(
+          Icons.sentiment_very_dissatisfied,
+          color: Colors.red,
+        )),
+    Reaction(
+        id: 1,
+        widget: Icon(
+          Icons.sentiment_dissatisfied,
+          color: Colors.redAccent,
+        )),
+    Reaction(
+        id: 2,
+        widget: Icon(
+          Icons.sentiment_neutral,
+          color: Colors.amber,
+        )),
+    Reaction(
+        id: 3,
+        widget: Icon(
+          Icons.sentiment_satisfied,
+          color: Colors.lightGreen,
+        )),
+    Reaction(
+        id: 4,
+        widget: Icon(
+          Icons.sentiment_very_satisfied,
+          color: Colors.green,
+        ))
+  ];
   Widget? _widget;
   @override
   void initState() {
@@ -49,7 +87,8 @@ class _TableSessionState extends State<TableSession> {
       children: [
         Image.asset('images/tst.png'),
         Text(
-          'هنا يمكنك البدء بجلسات الليزر الخاص بك.. مرشدك الشخصي سوف يبدأ بالخطوات التالية'.tr,
+          'هنا يمكنك البدء بجلسات الليزر الخاص بك.. مرشدك الشخصي سوف يبدأ بالخطوات التالية'
+              .tr,
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
         ),
@@ -244,13 +283,21 @@ class _TableSessionState extends State<TableSession> {
                     .tr,
                 style: TextStyle(color: Colors.black),
               ),
-              IconButton(
+              SizedBox(
+                height: 10.h,
+              ),
+              FloatingActionButton(
+                  backgroundColor: Colors.white,
                   onPressed: () {
                     setState(() {
                       _widget = sixth();
                     });
                   },
-                  icon: Icon(Icons.keyboard_arrow_right))
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Color.fromRGBO(232, 133, 133, 1),
+                    size: 40,
+                  )),
             ],
           )),
     );
@@ -261,47 +308,51 @@ class _TableSessionState extends State<TableSession> {
         elevation: 12,
         margin:
             EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 15.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'ارتدي النظارات المرفقة مع الجهاز وتأكدي إن شاشة الومضات نظيفة وغير مبللة /عدم تعريض الجهاز للماء أبدا/-قومي بتوصيل الجهاز بالقابس الكهربائي- ضعي الجهاز بشكل عمودي على البشرة بزاوية 90 درجة ولا تنسي اي جزء من تطبيق ومضات الليزر في المكان المراد علاجه.-لتحقيق نتائج أكثر فعالية قومي بتطبيق الليزر مرتين على كل مكان تريدين معالجته بالليزر.-في حال الشعور بالألم أو الانزعاج الشديد قومي بالتطبيق بمقدار ومضة واحدة فقط'
-                  .tr,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Image.asset(imgif),
-            SizedBox(
-              height: 10.h,
-            ),
-            TextButton.icon(
-                onPressed: () {
-                  Get.to(Using());
-                },
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                label: Text(
-                  'يمكنك استخدام ميزة الوميض التلقائي لتسهيل جلسة الليزر الخاصة بك. في حال عدم معرفة الطريقة يرجى قراءة التعلميات من هنا'
-                      .tr,
-                  style: TextStyle(color: Colors.black),
-                  textAlign: TextAlign.center,
-                )),
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    _widget = seventh();
-                  });
-                },
-                icon: Icon(
-                  Icons.keyboard_arrow_right,
-                  color: Colors.black,
-                ))
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'ارتدي النظارات المرفقة مع الجهاز وتأكدي إن شاشة الومضات نظيفة وغير مبللة /عدم تعريض الجهاز للماء أبدا/-قومي بتوصيل الجهاز بالقابس الكهربائي- ضعي الجهاز بشكل عمودي على البشرة بزاوية 90 درجة ولا تنسي اي جزء من تطبيق ومضات الليزر في المكان المراد علاجه.-لتحقيق نتائج أكثر فعالية قومي بتطبيق الليزر مرتين على كل مكان تريدين معالجته بالليزر.-في حال الشعور بالألم أو الانزعاج الشديد قومي بالتطبيق بمقدار ومضة واحدة فقط'
+                    .tr,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Image.asset(imgif),
+              SizedBox(
+                height: 10.h,
+              ),
+              TextButton.icon(
+                  onPressed: () {
+                    Get.to(Using());
+                  },
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                  label: Text(
+                    'يمكنك استخدام ميزة الوميض التلقائي لتسهيل جلسة الليزر الخاصة بك. في حال عدم معرفة الطريقة يرجى قراءة التعلميات من هنا'
+                        .tr,
+                    style: TextStyle(color: Colors.black),
+                    textAlign: TextAlign.center,
+                  )),
+              FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      _widget = seventh();
+                    });
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Color.fromRGBO(232, 133, 133, 1),
+                    size: 40,
+                  )),
+            ],
+          ),
         ));
   }
 
@@ -326,43 +377,31 @@ class _TableSessionState extends State<TableSession> {
                 height: 10.h,
               ),
               Text('ما هو تقييمك لهذه الجلسة؟'.tr),
-              SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ...List.generate(5, (index) {
-                        switch (index) {
-                          case 0:
-                            return Icon(
-                              Icons.sentiment_very_dissatisfied,
-                              color: Colors.red,
-                            );
-                          case 1:
-                            return Icon(
-                              Icons.sentiment_dissatisfied,
-                              color: Colors.redAccent,
-                            );
-                          case 2:
-                            return Icon(
-                              Icons.sentiment_neutral,
-                              color: Colors.amber,
-                            );
-                          case 3:
-                            return Icon(
-                              Icons.sentiment_satisfied,
-                              color: Colors.lightGreen,
-                            );
-                          default:
-                            return Icon(
-                              Icons.sentiment_very_satisfied,
-                              color: Colors.green,
-                            );
-                        }
-                      })
-                    ],
-                  )),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ...lstreaction.map((e) => Container(
+                              color:
+                                  inre.toInt() == e.id ? Colors.black26 : null,
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    inre = e.id!;
+                                    _widget = seventh();
+                                  });
+                                  log('message');
+                                },
+                                child: e.widget,
+                              ),
+                            ))
+                      ],
+                    )),
+              ),
               IconButton(
                   onPressed: () {
                     setState(() {
@@ -408,20 +447,8 @@ class _TableSessionState extends State<TableSession> {
                     var logd = DateTime.now().toString();
                     log(logd);
                     await storage.write('date', logd);
-                    await AndroidAlarmManager.periodic(
-                      const Duration(days: 7),
-                      0,
-                      () {
-                        final notifi = NotificationController();
-                        notifi.recivNotificationtoUser(Notifications(
-                            title: 'جلسة الليزر'.tr,
-                            body: 'حان موعد جلسة الليزر'.tr));
-                      },
-                      rescheduleOnReboot: true,
-                      allowWhileIdle: true,
-                      exact: true,
-                      wakeup: true,
-                    );
+                    Workmanager().registerPeriodicTask("1", "IPL",
+                        frequency: Duration(days:7));
                   },
                   child: Text(
                     'إنهاء'.tr,

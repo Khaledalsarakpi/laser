@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:laser/model/skin.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const String logo = 'images/logo.png';
 const String we = 'images/we.png';
@@ -79,17 +80,57 @@ void show_shakawa() {
             'Germany',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Text(
-            'info@prinseska.com',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+          InkWell(
+            onTap: (){
+              String? encodeQueryParameters(Map<String, String> params) {
+                return params.entries
+                    .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                    .join('&');
+              }
+              final Uri emailLaunchUri = Uri(
+                scheme: 'mailto',
+                path: 'info@prinseska.com',
+                query: encodeQueryParameters(<String, String>{
+                  'subject': ''
+                }),
+              );
+
+              launch(emailLaunchUri.toString());
+            },
+            child: Text(
+              'info@prinseska.com',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+            ),
           ),
-          Text(
-            'www.prinseska.com',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
+          InkWell(
+            onTap:_launchURL,
+            child: Text(
+              'www.prinseska.com',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap:_launchURL_P,
+            child: Text(
+              'سياسة الخصوصية'.tr,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
             ),
           ),
         ],
       ));
+}
+const String _url = 'https://www.prinseska.com';
+const String _privacy_url='https://ipl-prinseska.blogspot.com/p/privacy-policy.html';
+void _launchURL() async {
+  if (!await launch(_url));
+}
+
+void _launchURL_P() async {
+  if (!await launch(_privacy_url));
 }

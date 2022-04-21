@@ -10,6 +10,7 @@ import 'package:laser/view/welcom_view.dart';
 import '../constant/constant.dart';
 import 'home.dart';
 import 'package:laser/localization_services.dart';
+
 const colorizeColors = [
   Color.fromRGBO(215, 115, 114, 1.0),
   Colors.purple,
@@ -19,7 +20,6 @@ const colorizeColors = [
   Color.fromRGBO(215, 115, 114, 1.0)
 ];
 
-
 class Introview extends StatelessWidget {
   var lang = [
     Language(name: 'Arabic', code: 'ar'),
@@ -27,6 +27,7 @@ class Introview extends StatelessWidget {
   ];
   var txtcontroller = TextEditingController();
   String? code = 'ar';
+  var storage = GetStorage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,20 +40,15 @@ class Introview extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-
-           AnimatedTextKit(
-
+          AnimatedTextKit(
             animatedTexts: [
               ColorizeAnimatedText(
-                'Because you need Time to you self',
+                'Because you need time for yourself',
                 speed: Duration(seconds: 1),
-                textStyle: TextStyle(
-                    fontSize: 24.0.sp,
-                    fontWeight: FontWeight.bold
-                ),
+                textStyle:
+                    TextStyle(fontSize: 24.0.sp, fontWeight: FontWeight.bold),
                 colors: colorizeColors,
               ),
-
             ],
           ),
           SizedBox(
@@ -104,6 +100,7 @@ class Introview extends StatelessWidget {
               onPressed: () {
                 Get.updateLocale(Locale(code!));
                 var storage = GetStorage();
+                storage.write('code', code);
                 var result = storage.read('barcode');
                 if (result != null) {
                   Get.to(WelcomeView());

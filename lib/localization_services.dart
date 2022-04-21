@@ -49,14 +49,18 @@ const Map<String, String> ar = {
   'hello': 'Hello!',
 };
 const Map<String, String> de = {
+  'قم بإنشاء حساب لتلقي الاشعارات':'Erstellen Sie ein Konto, um Benachrichtigungen zu erhalten',
+  'قم بإنشاء حساب لتستطيع ارسال سؤال':'Erstellen Sie ein Konto, um eine Frage zu senden',
+  'قم بالدخول لجدول جلساتي لحساب مواعيدك القادمة':'Melden Sie sich bei meinem Sitzungsplan an, um Ihre anstehenden Termine zu berechnen',
   'معلومات وتوصيات': 'Informationen und Empfehlungen',
   'بشرة بيضاء فاتحة جدا':'Sehr helle weiße Haut',
   'بشرة فاتحة':'Helle Haut',
+  'سياسة الخصوصية':'Datenschutz-Bestimmungen',
   'متوسطة إلى زيتونية':'Mittel bis oliv',
   'زيتونية إلى بني متوسط':'Oliv bis mittelbraun',
   'بني إلى بني غامق':'Braun bis dunkelbraun',
   'بني غامق جدا أسود':'Sehr dunkelbraun schwarz',
-  'التسجيل وبداية الاستخدام': 'Registrierung und Nutzungsbeginn',
+  'التشغيل وبداية الاستخدام': 'Betrieb und Nutzungsbeginn',
   'الجدول': 'Zeitplan',
   'ماهي تقنية الضوء المكثف IPL Prinseska':
       'Was ist die IPL Prinseska Intense Light Technology',

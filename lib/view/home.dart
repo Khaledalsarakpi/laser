@@ -42,7 +42,7 @@ class state_Home extends State<Home> {
             var auth = Get.put(AuthController()).auth.currentUser;
             if (auth == null) {
               showtoast(
-                  text: 'قم بانشاء حساب لتلقي الاشعارات'.tr,
+                  text: 'قم بإنشاء حساب لتلقي الاشعارات'.tr,
                   bgcolor: Colors.red);
               Get.to(Sign());
             } else {
@@ -142,7 +142,7 @@ class state_Home extends State<Home> {
                         child: Align(
                           alignment: Alignment.topRight,
                           child: Text(
-                            'التسجيل وبداية الاستخدام'.tr,
+                            'التشغيل وبداية الاستخدام'.tr,
                             overflow: TextOverflow.fade,
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -162,7 +162,7 @@ class state_Home extends State<Home> {
                       Get.to(Calender());
                     } else {
                       showtoast(
-                          text: 'قم بالدخول لجدول جلساتي لحساب مواعيدك القادمة',
+                          text: 'قم بالدخول لجدول جلساتي لحساب مواعيدك القادمة'.tr,
                           bgcolor: Colors.red);
                     }
                   },
@@ -299,7 +299,7 @@ class state_Home extends State<Home> {
               var auth = Get.put(AuthController()).auth.currentUser;
               if (auth == null) {
                 showtoast(
-                    text: 'قم بانشاء حساب لتسنطيع ارسال سؤال ',
+                    text: 'قم بإنشاء حساب لتستطيع ارسال سؤال'.tr,
                     bgcolor: Colors.red);
                 Get.to(Sign());
               } else {

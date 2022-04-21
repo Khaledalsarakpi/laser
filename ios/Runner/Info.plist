@@ -42,6 +42,14 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>UIBackgroundModes</key>
+    <array>
+    	<string>processing</string>
+    </array>
 	<false/>
 </dict>
+<key>BGTaskSchedulerPermittedIdentifiers</key>
+<array>
+	<string>workmanager.background.task</string>
+</array>
 </plist>
