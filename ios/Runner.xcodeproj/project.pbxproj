@@ -484,8 +484,3 @@
     	};
     };
 }
-SystemCapabilities = {
-	com.apple.BackgroundModes = {
-		enabled = 1;
-	};
-};
