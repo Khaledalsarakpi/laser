@@ -47,17 +47,18 @@
     	<string>processing</string>
     </array>
 	<false/>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+            <array>
+            	<string>workmanager.background.task</string>
+            </array>
+            <key>UIBackgroundModes</key>
+            <array>
+            	<string>processing</string>
+            </array>
+            <key>BGTaskSchedulerPermittedIdentifiers</key>
+            <array>
+            	<string>workmanager.background.task</string>
+            </array>
 </dict>
-<key>BGTaskSchedulerPermittedIdentifiers</key>
-<array>
-	<string>workmanager.background.task</string>
-</array>
-<key>UIBackgroundModes</key>
-<array>
-	<string>processing</string>
-</array>
-<key>BGTaskSchedulerPermittedIdentifiers</key>
-<array>
-	<string>workmanager.background.task</string>
-</array>
+
 </plist>
